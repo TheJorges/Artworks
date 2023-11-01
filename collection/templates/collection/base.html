@@ -1,0 +1,52 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link href="{% static 'output.css' %}" rel="stylesheet" />
+
+    {% block head %}
+
+    {% endblock head %}
+    <title> artworks </title>
+
+      <script>
+      /*to prevent Firefox FOUC, this must be here*/
+        let FF_FOUC_FIX;
+      </script>
+     <style>
+
+         {% block style %}
+
+         {% endblock style %}
+      </style>
+  </head>
+
+  <body class="bg-white dark:bg-slate-900" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {% block header %}
+      {% include "collection/header.html" %} 
+    {% endblock header %}
+
+
+    {% block content %}
+
+    {% endblock content %}
+
+   
+
+
+    {% block footer%}
+
+    {% endblock footer %}
+
+  <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
+  <script src="https://unpkg.com/htmx.org@1.8.5" integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w" crossorigin="anonymous"></script>
+
+  {% block scripts %}
+
+  {% endblock scripts %}
+
+</body>
+</html>
