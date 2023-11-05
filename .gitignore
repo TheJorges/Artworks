@@ -1,4 +1,6 @@
 # Django #
+.idea/
+.scannerwork/
 *.log
 *.pot
 *.pyc

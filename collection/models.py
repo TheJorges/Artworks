@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Artist(models.Model):
     slug = models.SlugField(max_length=80, unique=True)
     name = models.CharField(max_length=80)
@@ -28,3 +27,5 @@ class Artwork(models.Model):
     period = models.ForeignKey(Period, null=True, on_delete=models.RESTRICT)
     genre = models.ForeignKey(Genre, null=True, on_delete=models.RESTRICT)
     image_url = models.URLField()
+
+
