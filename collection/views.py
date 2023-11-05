@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
-
+from . import models
 def register(request):
     if request.method == 'POST':
         f = UserCreationForm(request.POST)
@@ -22,4 +22,8 @@ def register(request):
 
 
 def index(request):
-    return render(request, 'collection/index.html', {'data': 'Not'})
+    collections = None
+    if request.method == 'GET':
+        collections = models.Artwork.objects.all()
+    return render(request, 'collection/index.html', {'collections': collections})
+

@@ -1,6 +1,7 @@
 {% extends "collection/base.html" %}
 
 {% block content %}
+    <h1 style="color: white;text-align: center;font-size: 32px;margin: 30px 0px;">Explora obras de arte</h1>
 <div class=" flex justify-center md:mx-auto md:max-w-screen-2xl px-2">
         {% if user.is_authenticated %}
         <div class="my-5 bg-slate-200 border-l-4 border-slate-500 text-slate-700 p-6" role="alert">
@@ -8,6 +9,18 @@
           <p>Aquí podras ver muchas pinturas.</p>
           <p class="font-bold"> <a class="text-sky-600" href="/accounts/logout"> Termina la sesión </a></p>
         </div>
+        {% elif collections%}
+
+            <div class="grid grid-cols-1 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {% for collection in collections %}
+                    <div class="bg-white p-4 rounded-lg shadow-md flex-col justify-center" style="display: flex;flex-direction: column;justify-content: center;">
+                        <a href="" style="text-align: center; display: flex; justify-content: center;">
+                            <img class=" " src="{{ collection.image_url }}" alt="{{ collection.title }}" style="width: 300px; height: 400px; background-size: contain;background-repeat: no-repeat;">
+                        </a>
+                        <a class="text-black text-center mt-2 block" href="">{{ collection.title }}</a>
+                    </div>
+                {% endfor %}
+            </div>
         {% else %}
         <div class="my-5 bg-slate-200 border-l-4 border-slate-500 text-slate-700 p-6" role="alert">
           <p class="font-bold">Hola</p>
