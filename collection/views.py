@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from . import models
 from collection.models import Artwork
+from collection.models import Artist
 import random
 
 def register(request):
@@ -32,13 +33,10 @@ def index(request):
     return render(request, 'collection/index.html', {'artworks': random_works})
 
 def artwork(request, artwork_id):
-
     artwork = Artwork.objects.get(pk=artwork_id)
-
     return render(request, 'collection/pinturas_detail.html', {'artwork': artwork})
 
-def author(request, artwork_id):
-
-    artwork = Artwork.objects.get(pk=artwork_id)
-
-    return render(request, 'collection/pinturas_detail.html', {'artwork': artwork})
+def author(request, author_name):
+    author = Artist.objects.get(name=author_name)
+    artworks = Artwork.objects.filter(author=author)
+    return render(request, 'collection/author.html', {'author': author,'artworks': artworks})

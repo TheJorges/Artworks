@@ -1,0 +1,18 @@
+{% extends "collection/base.html" %}
+
+{% block content %}
+<h1>{{ author.name }}</h1>
+<h1>Born date : {{ author.born_date }}</h1>
+
+<h2>Pinturas del autor:</h2>
+<ul>
+    {% for artwork in artworks %}
+        <li>
+            <a href="/artwork/{{ artwork.id }}">
+                <img src="{{artwork.image_url}}" alt="{{artwork.title}}" />
+                <p>{{ artwork.title }}</p>
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
