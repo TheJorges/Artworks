@@ -3,6 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from . import models
+from collection.models import Artwork
+import random
+
 def register(request):
     if request.method == 'POST':
         f = UserCreationForm(request.POST)
@@ -22,8 +25,20 @@ def register(request):
 
 
 def index(request):
-    collections = None
-    if request.method == 'GET':
-        collections = models.Artwork.objects.all()
-    return render(request, 'collection/index.html', {'collections': collections})
+    artworks = list(Artwork.objects.all())
+    random_works = []
+    if artworks:
+        random_works = random.sample(artworks, 16)
+    return render(request, 'collection/index.html', {'artworks': random_works})
 
+def artwork(request, artwork_id):
+
+    artwork = Artwork.objects.get(pk=artwork_id)
+
+    return render(request, 'collection/pinturas_detail.html', {'artwork': artwork})
+
+def author(request, artwork_id):
+
+    artwork = Artwork.objects.get(pk=artwork_id)
+
+    return render(request, 'collection/pinturas_detail.html', {'artwork': artwork})
