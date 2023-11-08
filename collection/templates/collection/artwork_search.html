@@ -1,0 +1,39 @@
+{% extends "collection/base.html" %}
+{% block content %}
+<div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
+    <div class="-m-1 flex flex-wrap md:-m-2">
+        {% for artwork in page_obj %}  {# Cambia artworks a page_obj #}
+        <div class="flex w-1/4 flex-wrap pt-3">
+            <img
+                class="block h-full w-full rounded-lg object-cover object-center"
+                src="{{ artwork.image_url }}" alt="{{ artwork.title }}" />
+        </div>
+        <div class=" -m-1 h-10 mt-1 mb-5">
+            <a href="/artworks/{{ artwork.id }}" class="block overflow-hidden text-ellipsis pl-5 text-sky-600 font-bold">{{ artwork.title }}</a>  {# Elimina "|truncatechars:40" de esta línea #}
+            <a href="#" class="block pl-5">{{ artwork.author.name }}
+                <span class="text-gray-400 text-sm font-thin">{{ artwork.date }}</span>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <nav class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-8" aria-label="Pagination">
+        <div class="hidden sm:block">
+            <p class="text-sm text-gray-700">
+                Showing page
+                <span class="font-medium">{{ page_obj.number }}</span>
+                of
+                <span class="font-medium">{{ page_obj.paginator.num_pages }}</span>
+            </p>
+        </div>
+        <div class="flex flex-1 justify-between sm:justify-end">
+            {% if page_obj.has_previous %}
+            <a href="?search={{ search_value|stringformat:'s' }}&page={{ page_obj.previous_page_number }}" class="relative inline-flex item-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Previous</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <a href="?search={{ search_value|stringformat:'s' }}&page={{ page_obj.next_page_number }}" class="relative ml-3 inline-flex item-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Next</a>
+            {% endif %}
+        </div>
+    </nav>
+</div>
+{% endblock %}

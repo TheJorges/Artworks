@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login
 from . import models
 from collection.models import Artwork
 from collection.models import Artist
+from django.contrib.postgres import search
+from django.core.paginator import Paginator
 import random
 
 def register(request):
@@ -40,3 +42,50 @@ def author(request, author_name):
     author = Artist.objects.get(name=author_name)
     artworks = Artwork.objects.filter(author=author)
     return render(request, 'collection/author.html', {'author': author,'artworks': artworks})
+
+def random_artworks(request):
+    artwork_count = Artwork.objects.count()
+    num_artworks_to_display = 4
+
+    if artwork_count <= num_artworks_to_display:
+        random_works = list(Artwork.objects.all())
+    else:
+        # Genera un conjunto de índices aleatorios únicos para seleccionar obras de arte
+        random_indexes = random.sample(range(artwork_count), num_artworks_to_display)
+        random_works = [Artwork.objects.all()[index] for index in random_indexes]
+
+    return render(request, 'collection/artwork_search.html', {'artworks': random_works})
+
+def search_artworks(request):
+    if request.method == 'GET':
+        value = request.GET.get('search')  # Cambiar a request.GET.get para manejar la ausencia de 'search'
+        if value:
+            artwork = ft_artworks(value)
+            print(value)
+            print(artwork)
+            paginator = Paginator(artwork, 4)
+            page_number = request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
+
+            return render(request, 'collection/artwork_search.html', {'page_obj': page_obj, 'search_value': value})
+
+    # Agregar una respuesta de página de error u otra respuesta apropiada aquí si es necesario
+    return render(request, 'collection/error.html')  # Esto es solo un ejemplo, puedes personalizarlo
+
+
+def ft_artworks(value):
+    vector = (
+        search.SearchVector("title", weight="A")
+        + search.SearchVector("author__name", weight="B")  # Usar "author__name" en lugar de "author_name"
+        + search.SearchVector("style", weight="C")
+        + search.SearchVector("genre", weight="C")
+    )
+    query = search.SearchQuery(value, search_type="websearch")
+    return (
+        Artwork.objects.annotate(
+            search=vector,
+            rank=search.SearchRank(vector, query),
+        )
+        .filter(search=query)
+        .order_by("-rank")
+    )
