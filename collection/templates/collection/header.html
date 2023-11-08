@@ -1,13 +1,13 @@
 {% load static %}
-<nav class="bg-white shadow">
-  <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-    <div class="flex h-16 justify-between">
-      <div class="flex px-2 lg:px-0">
-        <div class="flex flex-shrink-0 items-center">
-          <img class="h-8 w-auto" src="{% static 'img/logo.png' %}" alt="Artworks">
-        </div>
-        <div class="hidden lg:ml-6 lg:flex lg:space-x-8">
+<nav class="bg-white shadow w-full p-2 " style="height: 54px;">
+  <div class="w-full flex justify-between h-full items-center">
+    <div class="w-full h-full items-center flex justify-between gap-4" style="height: 54px;">
+
+          <h1  style="padding-left: 12px;height: 54px;vertical-align: middle; line-height: 54px;font-size: 28px;">Artworks</h1>
+
+        <div class=" lg:ml-6 lg:flex lg:space-x-8 flex gap-4" style="margin-left: 20px;">
           <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+
           <a href="/" class="inline-flex items-center border-b-2
                         {% if request.path == '/' %}
                         border-sky-600 
@@ -15,7 +15,7 @@
                         border-transparent
                         {% endif %}
                         px-1 
-                        pt-1 text-sm font-medium text-gray-900">Principal</a>
+                        pt-1 text-sm font-medium text-gray-900" style="line-height: 54px;vertical-align: middle">Principal</a>
         {% if user.is_authenticated %}
           <a href="/collections" class="inline-flex items-center border-b-2 
                         {% if request.path == '/collections/' %}
@@ -25,53 +25,54 @@
                         {% endif %}
 
                         px-1
+
                         pt-1 text-sm font-medium text-gray-500 hover:border-gray-300
-                        hover:text-gray-700">Mis Colecciones</a>
+                        hover:text-gray-700" style="line-height: 54px;vertical-align: middle">Mis Colecciones</a>
 
         {% endif %}
         </div>
-      </div>
-      <div class="flex flex-1 items-center justify-center px-2 lg:ml-6 lg:justify-end">
-        <div class="w-full max-w-lg lg:max-w-xs">
-        <form method="get" action="/artworks/search" class="mb-3">
+
+
+
+
+
+      <div class="flex gap-4 items-center" style="position: absolute; right: 20px;">
+
+        <form method="get" action="/artwork_search/" class="" style="height: 54px;display: flex; align-items: center;">
+
           <label for="search" class="sr-only">Buscar</label>
           <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <input id="search" name="search" class="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900
+                <svg style="display:inline-block;" class="h-8 w-8 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="10" cy="10" r="7" />  <line x1="21" y1="21" x2="15" y2="15" /></svg>
+  
+            <input id="search" name="search" class="inline-block rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900
                             ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2
                             focus:ring-inset focus:ring-indigo-600 
                             sm:text-sm sm:leading-6" placeholder="Buscar" type="search" 
                         {% if search_value != None %} 
                             value="{{ search_value|stringformat:'s' }}"
                         {% endif %} >
-
+  
           </div>
-       </form>
-        </div>
-      </div>
-      <div class="hidden lg:ml-4 lg:flex lg:items-center">
+  
+  
+  
+        </form>
+        {% if user.is_authenticated %}
+
+          <a href="#"  style="line-height: 54px;vertical-align: middle;" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500"> Hola,
+            {{user.username}} </a>
 
 
-    {% if user.is_authenticated %}
-        <div class="relative ml-4 flex-shrink-0">
-          <a href="#" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500"> Hola, {{user.username}} </a>
-        </div>
-        <div class="relative ml-4 flex-shrink-0">
-          <a href="/accounts/logout" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-sky-700">Termina Sesión</a>
-        </div>
-    {% else %}
-        <div class="relative ml-4 flex-shrink-0">
-          <a href="/accounts/register/" class="inline-flex items-center
-                        px-1 pt-1 text-sm font-medium text-sky-700"> Regístrate </a>
-        </div>
-        <div class="relative ml-4 flex-shrink-0">
-          <a href="/accounts/login" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-sky-700">Inicia Sesión</a>
-        </div>
-    {% endif %}
+          <a href="/accounts/logout"  style="line-height: 54px;vertical-align: middle;" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-sky-700">Termina
+            Sesión</a>
+        {% else %}
+
+          <a href="/accounts/register/" class="items-center
+                        px-1 pt-1 text-sm font-medium text-sky-700" style="line-height: 54px;vertical-align: middle;"> Regístrate </a>
+
+          <a href="/accounts/login" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-sky-700" style="line-height: 54px;vertical-align: middle;">Inicia
+            Sesión</a>
+        {% endif %}
       </div>
     </div>
   </div>
