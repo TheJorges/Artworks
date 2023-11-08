@@ -9,4 +9,7 @@ urlpatterns = [
     path("author/<str:author_name>/", views.author, name="author"),
     path("artwork_search/", views.search_artworks, name="artwork_search"),
     path("artwork/random/", views.random_artworks, name="random_artworks"),
+     path("collections/", views.collections, name="collections"),
+    path("collection_list/", views.collection_list, name="collection_list"),
+    path("collection/add", views.collection_add, name="collection_add")
 ]

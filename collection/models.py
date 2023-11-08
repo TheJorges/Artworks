@@ -28,3 +28,9 @@ class Artwork(models.Model):
     period = models.ForeignKey(Period, null=True, on_delete=models.RESTRICT)
     genre = models.ForeignKey(Genre, null=True, on_delete=models.RESTRICT)
     image_url = models.URLField()
+    
+class Collection(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.RESTRICT)
+    artworks = models.ManyToManyField(Artwork)
+    name = models.CharField(max_length=80)
+    description = models.TextField(blank=True)
