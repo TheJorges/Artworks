@@ -1,18 +1,22 @@
 {% extends "collection/base.html" %}
 
 {% block content %}
-<h1>{{ author.name }}</h1>
-<h1>Born date : {{ author.born_date }}</h1>
+<div class="container mx-auto p-4">
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold">{{ author.name }}</h1>
+        <p class="text-xl text-gray-600">Born date: {{ author.born_date }}</p>
+    </div>
 
-<h2>Pinturas del autor:</h2>
-<ul>
-    {% for artwork in artworks %}
-        <li>
-            <a href="/artwork/{{ artwork.id }}">
-                <img src="{{artwork.image_url}}" alt="{{artwork.title}}" />
-                <p>{{ artwork.title }}</p>
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+    <h2 class="text-2xl mb-4">Pinturas del autor:</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% for artwork in artworks %}
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <a href="/artwork/{{ artwork.id }}">
+                    <img src="{{artwork.image_url}}" alt="{{artwork.title}}" class="w-full h-auto mb-2">
+                    <p class="text-lg font-semibold">{{ artwork.title }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}

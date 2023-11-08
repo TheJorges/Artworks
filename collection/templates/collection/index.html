@@ -9,13 +9,16 @@
                 <p>Aquí podrás ver muchas pinturas.</p>
                 <div class="flex flex-wrap -mx-2">
                     {% for artwork in artworks %}  
-                        <div class="w-1/4 px-2 mb-4">
+                        <div class="w-1/4 md:w-1/4 sm:w-1/2 px-2 mb-4">
                             <a href="/artwork/{{artwork.id}}">
                                 <img
-                                class="block rounded-lg object-cover object-center"
-                                src="{{artwork.image_url}}" alt="{{artwork.title}}" />
+                                    class="block rounded-lg object-cover object-center"
+                                    src="{{artwork.image_url}}"
+                                    alt="{{artwork.title}}"
+                                    style="max-width: 320px; max-height: 320px;"  
+                                />
                             </a>
-                                <div class="h-10 mt-2">
+                            <div class="h-10 mt-2">
                                 <a href="/artwork/{{artwork.id}}" class="block text-sky-600 font-bold text-ellipsis">{{artwork.title|truncatechars_html:40}}</a>
                                 <a href="/author/{{artwork.author.name}}" class="block text-sm">{{artwork.author.name}} 
                                     <span class="text-gray-400 text-sm font-thin">{{artwork.date}}</span>
@@ -29,12 +32,15 @@
         {% else %}
             <div class="flex flex-wrap -mx-2">
                 {% for artwork in artworks %}
-                    <div class="w-1/4 px-2 mb-4">
+                    <div class="w-1/4 md:w-1/4 sm:w-1/2 px-2 mb-4">
                         <a href="/artwork/{{artwork.id}}">
-                        <img
-                            class="block rounded-lg object-cover object-center"
-                            src="{{artwork.image_url}}" alt="{{artwork.title}}" />
-                            </a>
+                            <img
+                                class="block rounded-lg object-cover object-center"
+                                src="{{artwork.image_url}}"
+                                alt="{{artwork.title}}"
+                                style="max-width: 320px; max-height: 320px;"  
+                            />
+                        </a>
                         <div class="h-10 mt-2">
                             <a href="/artwork/{{artwork.id}}" class="block text-sky-600 font-bold text-ellipsis">{{artwork.title|truncatechars_html:40}}</a>
                             <a href="/author/{{artwork.author.name}}" class="block text-sm">{{artwork.author.name}} 

@@ -1,23 +1,18 @@
 {% extends "collection/base.html" %}
 {% block content %}
 <div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
-    <div class="-m-1 flex flex-wrap md:-m-2">
-        {% for artwork in page_obj %}  {# Cambia artworks a page_obj #}
-        <div class="flex w-1/4 flex-wrap pt-3">
-            <img
-                class="block h-full w-full rounded-lg object-cover object-center"
-                src="{{ artwork.image_url }}" alt="{{ artwork.title }}" />
-        </div>
-        <div class=" -m-1 h-10 mt-1 mb-5">
-            <a href="/artworks/{{ artwork.id }}" class="block overflow-hidden text-ellipsis pl-5 text-sky-600 font-bold">{{ artwork.title }}</a>  {# Elimina "|truncatechars:40" de esta línea #}
-            <a href="#" class="block pl-5">{{ artwork.author.name }}
-                <span class="text-gray-400 text-sm font-thin">{{ artwork.date }}</span>
-            </a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">  {# Usamos una cuadrícula para mostrar las pinturas en columnas #}
+        {% for artwork in page_obj %}
+        <div class="border rounded-lg p-4">
+            <img class="block h-32 rounded-lg object-cover object-center mx-auto mb-2" src="{{ artwork.image_url }}" alt="{{ artwork.title }}" />
+            <a href="/artworks/{{ artwork.id }}" class="block text-ellipsis text-sky-600 font-bold">{{ artwork.title }}</a>
+            <div class="text-gray-600 text-sm">{{ artwork.author.name }}</div>
+            <div class="text-gray-400 text-sm">{{ artwork.date }}</div>
         </div>
         {% endfor %}
     </div>
 
-    <nav class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-8" aria-label="Pagination">
+    <nav class="flex items-center justify-center border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-8" aria-label="Pagination">
         <div class="hidden sm:block">
             <p class="text-sm text-gray-700">
                 Showing page
@@ -26,14 +21,14 @@
                 <span class="font-medium">{{ page_obj.paginator.num_pages }}</span>
             </p>
         </div>
-        <div class="flex flex-1 justify-between sm:justify-end">
+        <div class="flex justify-between items-center space-x-4 sm:justify-center mt-4">  {# Ajustamos el espacio entre los botones y los centramos #}
             {% if page_obj.has_previous %}
-            <a href="?search={{ search_value|stringformat:'s' }}&page={{ page_obj.previous_page_number }}" class="relative inline-flex item-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Previous</a>
+            <a href="?search={{ search_value|stringformat:'s' }}&page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center rounded-md bg-white px-4 py-3 text-lg font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0 mx-auto">Previous</a>
             {% endif %}
             {% if page_obj.has_next %}
-            <a href="?search={{ search_value|stringformat:'s' }}&page={{ page_obj.next_page_number }}" class="relative ml-3 inline-flex item-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Next</a>
+            <a href="?search={{ search_value|stringformat:'s' }}&page={{ page_obj.next_page_number }}" class="relative inline-flex items-center rounded-md bg-white px-4 py-3 text-lg font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0 mx-auto">Next</a>
             {% endif %}
-        </div>
-    </nav>
+        </div>        
+    </nav>    
 </div>
 {% endblock %}
