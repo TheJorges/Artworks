@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="bg-white shadow w-full p-2 " style="height: 54px;">
   <div class="w-full flex justify-between h-full items-center">
-    <div class="w-full h-full items-center flex justify-between gap-4" style="height: 54px;">
+    <div class="w-full h-full items-center flex justify-start gap-4" style="height: 54px;">
 
           <h1  style="padding-left: 12px;height: 54px;vertical-align: middle; line-height: 54px;font-size: 28px;color: #201266;">Artworks</h1>
 
@@ -16,7 +16,7 @@
                         {% endif %}
                         px-1 
                         pt-1 text-sm font-medium text-gray-900" style="line-height: 54px;vertical-align: middle">Principal</a>
-        {% if user.is_authenticated %}
+          {% if user.is_authenticated %}
           <a href="/collections" class="inline-flex items-center border-b-2 
                         {% if request.path == '/collections/' %}
                         border-sky-600 
@@ -29,14 +29,14 @@
                         pt-1 text-sm font-medium text-gray-500 hover:border-gray-300
                         hover:text-gray-700" style="line-height: 54px;vertical-align: middle">Mis Colecciones</a>
 
-        {% endif %}
+            {% endif %}
         </div>
 
 
 
 
 
-      <div class="flex gap-4 items-center" style="position: absolute; right: 20px;">
+      <div class="flex gap-2 items-center" style="position: absolute; right: 20px;">
 
         <form method="get" action="/artwork_search/" class="" style="height: 54px;display: flex; align-items: center;">
 
@@ -56,20 +56,21 @@
         </form>
         {% if user.is_authenticated %}
 
-          <a href="#"  style="line-height: 54px;vertical-align: middle;" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500"> Hola,
-            {{user.username}} </a>
+        <a href="#"  style="line-height: 54px;vertical-align: middle;" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500"> Hola,
+          {{user.username}} </a>
 
 
-          <a href="/accounts/logout"  style="line-height: 54px;vertical-align: middle;" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-sky-700">Termina
-            Sesión</a>
-        {% else %}
+        <a href="/accounts/logout"  style="line-height: 54px;vertical-align: middle;" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-sky-700">Termina
+          Sesión</a>
+      {% else %}
 
-          <a href="/accounts/register/" class="items-center
-                        px-1 pt-1 text-sm font-medium text-sky-700" style="line-height: 54px;vertical-align: middle;"> Regístrate </a>
+        <a href="/accounts/register/" class="items-center
+                      px-1 pt-1 text-sm font-medium text-sky-700" style="line-height: 54px;vertical-align: middle;"> Regístrate </a>
 
-          <a href="/accounts/login" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-sky-700" style="line-height: 54px;vertical-align: middle;">Inicia
-            Sesión</a>
-        {% endif %}
+        <a href="/accounts/login" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-sky-700" style="line-height: 54px;vertical-align: middle;">Inicia
+          Sesión</a>
+      {% endif %}
+
       </div>
     </div>
   </div>
