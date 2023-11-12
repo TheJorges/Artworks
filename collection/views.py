@@ -9,6 +9,7 @@ from collection.models import Artist
 from django.contrib.postgres import search
 from django.core.paginator import Paginator
 from .forms import CollectionForm, AgregarAColeccionForm
+
 import random
 
 def register(request):
@@ -36,6 +37,7 @@ def index(request):
         random_works = random.sample(artworks, 16)
     return render(request, 'collection/index.html', {'artworks': random_works})
 
+@login_required
 def artwork(request, artwork_id):
     pintura = Artwork.objects.get(pk=artwork_id)
     collections = Collection.objects.filter(owner=request.user)
@@ -144,9 +146,7 @@ def collection_items(request):
             if id:
                 collection = models.Collection.objects.filter(id=collection_id).first()
                 if collection.owner == request.user:
-                    list_collections(request)
                     return render(request, 'collection/collection_items.html', {'collection': collection,'items':collection.artworks.all()})
-
         return render(request, 'collection/collection_items.html', {'collection': None,'items':None})
 
 

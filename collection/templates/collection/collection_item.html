@@ -6,12 +6,30 @@
             <img class="" style="object-fit: cover;scale: .81;" src="{{ item.image_url}}" alt="">
         </div>
         <h2 class="text-center mt-2 text-sky-700">{{ item.title }}</h2>
-        <p class="text-center text-gray-600">{{item.author.name}} - {{item.date}}</p>
+        <p class="text-center text-gray-600">{{item.author.name}} - {{item.date}} </p>
         <div class="w-72 h-8 flex justify-center mt-4 gap-3">
-            <button title="Añadir a otra colección" class="w-5 text-center rounded-md" alt style="background-image: url('{% static 'img/add.svg' %}');width: 30px;height:30px;background-size: cover"></button>
+            <button data-id="{{ item.id }}" title="Añadir a otra colección" class="w-5 text-center rounded-md" alt style="background-image: url('{% static 'img/add.svg' %}');width: 30px;height:30px;background-size: cover"></button>
             <button title="Mover a otra colección" class="w-5 text-center rounded-md" alt style="background-image: url('{% static 'img/change.svg' %}');width: 30px;height:30px;background-size: cover"></button>
             <button title="Quitar de la colección" class="w-5 text-center rounded-md" alt style="background-image: url('{% static 'img/delete.svg' %}');width: 30px;height:30px;background-size: cover"></button>
         </div>
     </li>
 {%endfor%}
+<script>
+    function mover() {
+        // Obtener el id del elemento
+        const itemId = event.target.getAttribute("data-id");
+        // Realizar una solicitud a la vista de Django con los parámetros
+        fetch(`/ruta-de-tu-vista/${itemId}/`, {
+            method: 'GET',
+        })
+        .then(response => {
+            if (response.status === 200) {
+                // La solicitud se completó con éxito, puedes redirigir o realizar otras acciones necesarias aquí
+                window.location.href = response.url; // Redirigir a la vista de colección
+            } else {
+                console.error('Hubo un error al realizar la solicitud.');
+            }
+        });
+    }
+</script>
 </ul>
