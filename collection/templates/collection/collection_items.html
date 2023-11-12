@@ -1,0 +1,9 @@
+{% extends "collection/base.html" %}
+{% block content %}
+
+<div class="w-5/6 mx-auto mt-16">
+    <h1 class="text-center text-3xl">Items de la colección "{{collection.name}}" </h1>
+    
+    {% include 'collection/collection_item.html' %}
+</div>
+{% endblock content %}

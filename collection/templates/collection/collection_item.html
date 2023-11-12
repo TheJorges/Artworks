@@ -1,0 +1,17 @@
+{% load static %}
+<ul class="flex gap-4 flex-wrap mx-auto justify-center mt-10">
+{% for item in items%}
+    <li class="p-4 w-80 border border-gray-300 rounded-lg mb-4 bg-slate-100">
+        <div class="w-72 h-96 border border-gray-200  flex justify-center items-center rounded-sm bg-slate-0">
+            <img class="" style="object-fit: cover;scale: .81;" src="{{ item.image_url}}" alt="">
+        </div>
+        <h2 class="text-center mt-2 text-sky-700">{{ item.title }}</h2>
+        <p class="text-center text-gray-600">{{item.author.name}} - {{item.date}}</p>
+        <div class="w-72 h-8 flex justify-center mt-4 gap-3">
+            <button title="Añadir a otra colección" class="w-5 text-center rounded-md" alt style="background-image: url('{% static 'img/add.svg' %}');width: 30px;height:30px;background-size: cover"></button>
+            <button title="Mover a otra colección" class="w-5 text-center rounded-md" alt style="background-image: url('{% static 'img/change.svg' %}');width: 30px;height:30px;background-size: cover"></button>
+            <button title="Quitar de la colección" class="w-5 text-center rounded-md" alt style="background-image: url('{% static 'img/delete.svg' %}');width: 30px;height:30px;background-size: cover"></button>
+        </div>
+    </li>
+{%endfor%}
+</ul>

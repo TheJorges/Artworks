@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.forms import UserCreationForm
@@ -121,3 +122,16 @@ def collection_add(request):
     return render(request,
                   'collection/collection_form.html',
                   {'form': form})
+
+@login_required
+def collection_items(request):
+        print('hola')
+        if (request.user.is_authenticated):
+            collection_id = request.GET.get('id')
+            if id:
+                collection = models.Collection.objects.filter(id=collection_id).first()
+                if collection.owner == request.user:
+                    return render(request, 'collection/collection_items.html', {'collection': collection,'items':collection.artworks.all()})
+
+        return render(request, 'collection/collection_items.html', {'collection': None,'items':None})
+
