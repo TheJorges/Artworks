@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
@@ -8,7 +8,7 @@ from collection.models import Artwork, Collection
 from collection.models import Artist
 from django.contrib.postgres import search
 from django.core.paginator import Paginator
-from .forms import CollectionForm
+from .forms import CollectionForm, AgregarAColeccionForm
 import random
 
 def register(request):
@@ -37,8 +37,21 @@ def index(request):
     return render(request, 'collection/index.html', {'artworks': random_works})
 
 def artwork(request, artwork_id):
-    artwork = Artwork.objects.get(pk=artwork_id)
-    return render(request, 'collection/pinturas_detail.html', {'artwork': artwork})
+    pintura = Artwork.objects.get(pk=artwork_id)
+    collections = Collection.objects.filter(owner=request.user)
+    list_collections(request)
+    if request.method == 'POST':
+        print("sexo")
+        form = AgregarAColeccionForm(request.user, request.POST)
+        if form.is_valid():
+            selected_collection = form.cleaned_data['collection']
+            if selected_collection:
+                selected_collection.artworks.add(pintura)
+    else:
+        print("sexo2")
+        form = AgregarAColeccionForm(request.user)
+    
+    return render(request, 'collection/pinturas_detail.html', {'artwork': pintura, 'collections': collections, 'form': form})
 
 def author(request, author_name):
     author = Artist.objects.get(name=author_name)
@@ -131,7 +144,32 @@ def collection_items(request):
             if id:
                 collection = models.Collection.objects.filter(id=collection_id).first()
                 if collection.owner == request.user:
+                    list_collections(request)
                     return render(request, 'collection/collection_items.html', {'collection': collection,'items':collection.artworks.all()})
 
         return render(request, 'collection/collection_items.html', {'collection': None,'items':None})
 
+
+def list_collections(request):
+    collections = Collection.objects.filter(owner=request.user)
+
+    for collection in collections:
+        print(f"Nombre de la colección: {collection.name}")
+        for artwork in collection.artworks.all():
+            print(f"- {artwork.title}")
+
+
+def agregar_obra(request, pintura_id):
+    if request.method == 'POST':
+        selected_collection_id = request.POST.get('collection')
+
+        if selected_collection_id:
+            try:
+                selected_collection = Collection.objects.get(id=selected_collection_id, owner=request.user)
+                pintura = Artwork.objects.get(pk=pintura_id)
+                selected_collection.artworks.add(pintura)
+            except Collection.DoesNotExist:
+                # Manejar el caso en el que la colección no existe
+                pass
+
+    return redirect('pinturas_detail', pintura_id=pintura_id)

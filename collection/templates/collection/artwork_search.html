@@ -5,7 +5,7 @@
         {% for artwork in page_obj %}
         <div class="border rounded-lg p-4">
             <img class="block h-32 rounded-lg object-cover object-center mx-auto mb-2" src="{{ artwork.image_url }}" alt="{{ artwork.title }}" />
-            <a href="/artworks/{{ artwork.id }}" class="block text-ellipsis text-sky-600 font-bold">{{ artwork.title }}</a>
+            <a href="/artwork/{{ artwork.id }}" class="block text-ellipsis text-sky-600 font-bold">{{ artwork.title }}</a>
             <div class="text-gray-600 text-sm">{{ artwork.author.name }}</div>
             <div class="text-gray-400 text-sm">{{ artwork.date }}</div>
         </div>

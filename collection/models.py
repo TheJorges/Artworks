@@ -34,3 +34,6 @@ class Collection(models.Model):
     artworks = models.ManyToManyField(Artwork)
     name = models.CharField(max_length=80)
     description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
