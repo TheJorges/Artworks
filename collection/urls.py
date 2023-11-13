@@ -13,5 +13,7 @@ urlpatterns = [
     path("collection_list/", views.collection_list, name="collection_list"),
     path("collection/add", views.collection_add, name="collection_add"),
     path('collection/',views.collection_items, name='collection_items'),
+    path("collection/delete/<int:collection_id>", views.eliminar_coleccion, name="eliminar_coleccion"),
+
 ]
 

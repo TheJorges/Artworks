@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
@@ -173,3 +173,11 @@ def agregar_obra(request, pintura_id):
                 pass
 
     return redirect('pinturas_detail', pintura_id=pintura_id)
+
+def eliminar_coleccion(request, collection_id):
+    collection = get_object_or_404(Collection, pk=collection_id)
+    
+    # Agrega aquí la lógica para verificar si el usuario tiene permisos para eliminar esta colección.
+    
+    collection.delete()
+    return HttpResponse(status=204, headers={'HX-Trigger': 'listChanged'})

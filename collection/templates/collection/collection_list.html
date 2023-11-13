@@ -1,12 +1,12 @@
 {% for collection in collections %}
-            <tr>
-              <td class="whitespace-nowrap py-4 pl-4
-                        pr-3 text-sm font-medium 
-                        text-gray-900 sm:pl-0" ><a style="text-decoration: underline;" href="/collection?id={{ collection.id }}">{{collection.name}}</a></td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{collection.description}}</td>
-              <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900">Editar<span class="sr-only">
-                                        , {{collection.name}}</span></a>
-              </td>
-            </tr>
+    <tr>
+        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+            <a style="text-decoration: underline;" href="/collection?id={{ collection.id }}">{{ collection.name }}</a>
+        </td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ collection.description }}</td>
+        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+          <a href="#" class="text-indigo-600 hover:text-indigo-900">Editar</a>
+            <a href="#" class="text-red-600 hover:text-red-900" hx-get="{% url 'eliminar_coleccion' collection.id %}" hx-confirm="¿Estás seguro de que deseas eliminar esta colección?">Eliminar</a>
+        </td>
+    </tr>
 {% endfor %}
