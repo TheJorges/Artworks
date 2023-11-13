@@ -1,0 +1,10 @@
+<form method="post" action="{% url 'edit_collection' collection.id %}">
+    {% csrf_token %}
+    <label for="name">Nombre:</label>
+    <input type="text" name="name" value="{{ collection.name }}"><br>
+
+    <label for="description">Descripción:</label>
+    <textarea name="description">{{ collection.descrition }}</textarea><br>
+
+    <input type="submit" value="Guardar cambios">
+</form>

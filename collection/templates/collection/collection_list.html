@@ -1,12 +1,65 @@
-{% for collection in collections %}
-    <tr>
+    {% for collection in collections %}
+      <!-- Información actual -->
+      <tr>
         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-            <a style="text-decoration: underline;" href="/collection?id={{ collection.id }}">{{ collection.name }}</a>
+          <a style="text-decoration: underline;" href="/collection?id={{ collection.id }}">{{ collection.name }}</a>
         </td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ collection.description }}</td>
+        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{collection.description}}</td>
         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-          <a href="#" class="text-indigo-600 hover:text-indigo-900">Editar</a>
-            <a href="#" class="text-red-600 hover:text-red-900" hx-get="{% url 'eliminar_coleccion' collection.id %}" hx-confirm="¿Estás seguro de que deseas eliminar esta colección?">Eliminar</a>
+          <a href="#" class="text-indigo-600 hover:text-indigo-900" onclick="mostrarFormularioEdicion('{{collection.id}}', '{{collection.name}}', '{{collection.description}}')">Editar<span class="sr-only">{{collection.name}}</span></a>
+          <a href="#" class="text-red-600 hover:text-red-900" hx-get="{% url 'eliminar_coleccion' collection.id %}" hx-confirm="¿Estás seguro de que deseas eliminar esta colección?">Eliminar</a>
         </td>
+      </tr>
+
+    <!-- Formulario de edición -->
+    <tr>
+      <td colspan="3" class="p-4">
+        <div id="formulario-edicion" style="display: none;">
+          <form method="post" action="{% url 'edit_collection' collection.id %}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            {% csrf_token %}
+            <!-- Agrega un campo oculto para almacenar el ID de la colección -->
+            <input type="hidden" name="collection_id" id="id_collection_id" value="{{ collection.id }}">
+            
+            <!-- Nombre -->
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="id_name">Nombre:</label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="id_name" type="text" name="name" value="{{ collection.name }}">
+            </div>
+            
+            <!-- Descripción -->
+            <div class="mb-6">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="id_description">Descripción:</label>
+              <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="id_description" name="description">{{ collection.description }}</textarea>
+            </div>
+            
+            <!-- Botones -->
+            <div class="flex items-center justify-between">
+              <button class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Guardar cambios
+              </button>
+              <button type="button" onclick="cerrarFormularioEdicion()" class="text-sm font-semibold leading-6 text-black ml-4">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </td>
     </tr>
-{% endfor %}
+  {% endfor %}
+</tbody>
+</table>
+
+<script>
+function mostrarFormularioEdicion(collectionId, collectionName, collectionDescription) {
+  // Llena el formulario de edición con los datos actuales
+  document.getElementById('id_name').value = collectionName;
+  document.getElementById('id_description').value = collectionDescription;
+  // Muestra el formulario de edición
+  document.getElementById('formulario-edicion').style.display = 'block';
+  // Puedes almacenar el ID de la colección actual en un campo oculto del formulario
+  document.getElementById('id_collection_id').value = collectionId;
+}
+
+function cerrarFormularioEdicion() {
+  // Oculta el formulario de edición
+  document.getElementById('formulario-edicion').style.display = 'none';
+}
+</script>

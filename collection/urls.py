@@ -14,10 +14,10 @@ urlpatterns = [
     path("collection/add", views.collection_add, name="collection_add"),
     path('collection/',views.collection_items, name='collection_items'),
     path("collection/delete/<int:collection_id>", views.eliminar_coleccion, name="eliminar_coleccion"),
-
     path('collection/delete-item/<int:collection>/<int:artwork>', views.delete_from_collection, name='delete_from_collection'),
     path('collection/copy_item/<int:from_id>/<int:to_id>/<int:artwork_id>',views.copy_to_collection, name='copy_to_collection'),
-    path('collection/move_item/<int:from_id>/<int:to_id>/<int:artwork_id>',views.move_to_collection, name='move_to_collection')
+    path('collection/move_item/<int:from_id>/<int:to_id>/<int:artwork_id>',views.move_to_collection, name='move_to_collection'),
+    path('edit_collection/<int:coleccion_id>/',views.editar_coleccion, name='edit_collection'),
 
 ]
 

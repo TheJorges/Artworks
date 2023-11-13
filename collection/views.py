@@ -234,3 +234,16 @@ def eliminar_coleccion(request, collection_id):
     
     collection.delete()
     return HttpResponse(status=204, headers={'HX-Trigger': 'listChanged'})
+
+def editar_coleccion(request, coleccion_id):
+    coleccion = get_object_or_404(Collection, id=coleccion_id)
+
+    if request.method == 'POST':
+        # Caso de redirección
+        coleccion.name = request.POST.get('name', '')
+        coleccion.description = request.POST.get('description', '')
+        coleccion.save()
+        return HttpResponseRedirect('/collections/')
+    else:
+        # Caso de mostrar el formulario en la misma página
+        return render(request, 'collection/edit_collection.html', {'coleccion': coleccion})
