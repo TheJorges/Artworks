@@ -1,0 +1,27 @@
+{% load static %}
+<div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar a otra colección</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-auto">
+                {% for set in collections %}
+                    <ul class="w-full">
+                        <li class="flex justify-start items-center">
+                            <a onclick="copyItem({{ collection.id }}, {{ set.id }})" href="#" class= "w-5 border border-gray-200 rounded-md text-center mr-3 inline-block cursor-pointer" style="background-image: url('{% static 'img/add.svg' %}');width: 30px;height:30px;background-size: cover"></a>
+                            <a onclick="copyItem({{ collection.id }}, {{ set.id }})" href="#" class="inline-block mb-0 text-md text-slate-500 underline " style="text-decoration: underline;cursor: pointer;">{{ set.name }}</a>
+                        </li>
+                    </ul>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link href="{% static 'output.css' %}" rel="stylesheet" />
-
+    
     {% block head %}
 
     {% endblock head %}
     <title> artworks </title>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static 'lib/cute-alert/style.css' %}">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
       <script>
       /*to prevent Firefox FOUC, this must be here*/
         let FF_FOUC_FIX;
@@ -58,7 +62,7 @@
 
   <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
   <script src="https://unpkg.com/htmx.org@1.8.5" integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w" crossorigin="anonymous"></script>
-
+  <script src="{% static 'lib/cute-alert/cute-alert.js' %}"></script>
   {% block scripts %}
 
   {% endblock scripts %}

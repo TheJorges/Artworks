@@ -140,15 +140,68 @@ def collection_add(request):
 
 @login_required
 def collection_items(request):
-        print('hola')
+
         if (request.user.is_authenticated):
+            user_collections= Collection.objects.filter(owner= request.user)
             collection_id = request.GET.get('id')
             if id:
                 collection = models.Collection.objects.filter(id=collection_id).first()
                 if collection.owner == request.user:
-                    return render(request, 'collection/collection_items.html', {'collection': collection,'items':collection.artworks.all()})
+                    return render(request, 'collection/collection_items.html', {'collections':user_collections,'collection': collection,'items':collection.artworks.all()})
+
         return render(request, 'collection/collection_items.html', {'collection': None,'items':None})
 
+@login_required
+def delete_from_collection(request, collection, artwork):
+    if request.user.is_authenticated:
+        user_collections = Collection.objects.filter(owner=request.user)
+        if request.method == 'GET':
+
+            collection = Collection.objects.filter(id=collection).first()
+
+            if collection:
+                print('acuya')
+                artworks = collection.artworks.all()
+                try:
+                    collection.artworks.remove(artworks.filter(id=artwork).first())
+                except:
+                    print('Item not found')
+
+                return render(request, 'collection/collection_items.html', {'collections':user_collections,'collection': collection, 'items': artworks})
+    return render(request, 'collection/collection_items.html', {'collection': None, 'items': None})
+
+@login_required
+def copy_to_collection(request, from_id, to_id, artwork_id):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            collection_from = Collection.objects.filter(id=from_id).first()
+            collection_to = Collection.objects.filter(id=to_id).first()
+            if(collection_to):
+                artworks = collection_from.artworks.all()
+                artwork = Artwork.objects.filter(id=artwork_id).first()
+                if artwork:
+                    collection_to.artworks.add(artwork)
+                    return render(request, 'collection/collection_items.html', {'collection': collection_from, 'items': artworks})
+
+    return render(request, 'collection/collection_items.html', {'collection': None, 'items': None})
+
+@login_required
+def move_to_collection(request, from_id, to_id, artwork_id):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            collection_from = Collection.objects.filter(id=from_id).first()
+            collection_to = Collection.objects.filter(id=to_id).first()
+            if(collection_to):
+                artworks = collection_from.artworks.all()
+                artwork = Artwork.objects.filter(id=artwork_id).first()
+                if artwork:
+                    collection_to.artworks.add(artwork)
+                    to_delete = collection_from.artworks.filter(id= artwork_id)
+                    for element in to_delete:
+                        collection_from.artworks.remove(element)
+                    return render(request, 'collection/collection_items.html', {'collection': collection_from, 'items': artworks})
+
+    return render(request, 'collection/collection_items.html', {'collection': None, 'items': None})
 
 def list_collections(request):
     collections = Collection.objects.filter(owner=request.user)
