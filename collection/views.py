@@ -43,14 +43,14 @@ def artwork(request, artwork_id):
     collections = Collection.objects.filter(owner=request.user)
     list_collections(request)
     if request.method == 'POST':
-        print("sexo")
+        print("post")
         form = AgregarAColeccionForm(request.user, request.POST)
         if form.is_valid():
             selected_collection = form.cleaned_data['collection']
             if selected_collection:
                 selected_collection.artworks.add(pintura)
     else:
-        print("sexo2")
+        print("nopost")
         form = AgregarAColeccionForm(request.user)
     
     return render(request, 'collection/pinturas_detail.html', {'artwork': pintura, 'collections': collections, 'form': form})
